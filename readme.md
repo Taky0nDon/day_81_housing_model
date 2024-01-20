@@ -68,4 +68,29 @@ Some seaborn plots return a matplotlib Axes object, these are Axes-Level. Others
  #matplotlib labeling:
  `Axes.set_xlabel(label)`
  `Axes.set_ylabel(label)`
- 
+## Run  a pair plot
+
+>- What would you expect the relationship to be between pollution (NOX) and the distance to employment (DIS)?
+
+I would expect pollution to increase as distance to employment decreases. They would be inversely proportional.
+
+>- What kind of relationship do you expect between the number of rooms (RM) and the home value (PRICE)?
+
+I would expect to home value to increase as the number of rooms increases.
+
+>- What about the amount of poverty in an area (LSTAT) and home prices?
+
+I would expect area poverty to decrease as home prices increase.
+
+A #pairplot allows you to visual relationships between columns.
+[More on Seaborn pairplots](https://seaborn.pydata.org/generated/seaborn.pairplot.html#seaborn.pairplot)
+
+## Joint Plots
+#jointplot [documentation](https://seaborn.pydata.org/generated/seaborn.jointplot.html)
+
+Using #train_test_split [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
+`from sklearn.model_selection import train_test_split`
+
+1. Create subsets
+		
+
