@@ -162,3 +162,45 @@ actual_vs_predicted_prices.set_ylabel("Actual price (yi)")
 ![[Pasted image 20240124182816.png]]
 k
 Now do predicted price on the x-axis and residual(actual - minus predicted) on the y-axis
+
+#kde super impose kde over histogram representation of a Series:
+
+```python
+res_plot = sns.displot(x=residuals, kde=True)
+```
+
+![[Pasted image 20240124190502.png]]
+
+## Data transformations
+
+At this point we must either consider a new model entirely, our transforming our data (**actual**) to make it better fit with our linear model
+
+Is `data["PRICE"]` a good candidate for log transformation?
+```python
+price_plot = sns.displot(x=data["PRICE"],
+                         kde=True,
+                        )
+price_skew = data.PRICE.skew()
+print(f"Our price data has a skew of {price_skew}")
+```
+![[Pasted image 20240124191144.png]]
+
+Use `NumPy.log()` to create a series with the logarithmic prices
+Compare the skews. Which is closer to zero?
+```
+log_price = np.log(data.PRICE)
+print(f"The log data has a skew of {log_price.skew()}")
+log_price_plot = sns.displot(x=log_price,
+                             kde=True,
+                            )
+```
+![[Pasted image 20240124191355.png]]
+The log transformation has a skew much closer to 0.
+
+#### How does the #log #transformation work?
+* Every datum is replaced by it's `ln` (natural log)
+* Large value are more affected that smaller ones. They are 'compressed'
+<img src=https://i.imgur.com/TH8sK1Q.png height=200>
+
+If we use log prices, our model becomes: $$ \log (PR \hat ICE) = \theta _0 + \theta _1 RM + \theta _2 NOX + \theta_3 DIS + \theta _4 CHAS + ... + \theta _{13} LSTAT $$
+
