@@ -204,3 +204,39 @@ The log transformation has a skew much closer to 0.
 
 If we use log prices, our model becomes: $$ \log (PR \hat ICE) = \theta _0 + \theta _1 RM + \theta _2 NOX + \theta_3 DIS + \theta _4 CHAS + ... + \theta _{13} LSTAT $$
 
+
+
+### y-hat and y_i
+
+```python
+y_hat = price_regression.predict(X_train)
+# y_i is actual prices
+y_i = y_train
+
+```
+**y_hat** is predicted prices, **y_i** is actual prices
+
+```python
+y_hat = price_regression.predict(X_train)
+# y_i is actual prices
+y_i = y_train
+
+actual_vs_predicted_prices = sns.scatterplot(x=y_hat,
+                                             y= y_i,
+                                            )
+actual_vs_predicted_prices.set_title("Actual v Predicted Prices")
+actual_vs_predicted_prices.set_xlabel("Predicted Price (Y-hat)")
+actual_vs_predicted_prices.set_ylabel("Actual price (yi)")
+
+residuals = y_i - y_hat
+# y_train - price_regression.predict(X_train)
+res_vs_predicted = sns.scatterplot(x=y_hat,
+                                   y=residuals)
+res_vs_predicted.set_title("Residuals v Predicted Prices")
+res_vs_predicted.set_xlabel("Predicted Price (Y-hat)")
+res_vs_predicted.set_ylabel("Residuals")
+
+```
+residuals = (y_train (actual values!!) - regression_object.predict(X_train)(predicted values!!))
+
+to prevent plots from overlapping, call `plt.figure()` before each plot instantiation,
