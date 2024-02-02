@@ -86,12 +86,37 @@ I would expect area poverty to decrease as home prices increase.
 A #pairplot allows you to visual relationships between columns.
 [More on Seaborn pairplots](https://seaborn.pydata.org/generated/seaborn.pairplot.html#seaborn.pairplot)
 
+include a #regression-line:
+```python
+nox_dis = data[["NOX", "DIS"]]
+sns.pairplot(nox_dis, kind="reg", plot_kws={"line_kws": {"color": "cyan"}})
+```
 ## Joint Plots
 #jointplot [documentation](https://seaborn.pydata.org/generated/seaborn.jointplot.html)
+#### Make it pretty
+
+```python
+with sns.axes_style('darkgrid'):
+    sns.jointplot(data=data, x="DIS", y="NOX",
+                 height=8,
+                 kind="scatter",
+                 color="deeppink",
+                 joint_kws={'alpha': 0.5})
+```
 
 Using #train_test_split [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)
 `from sklearn.model_selection import train_test_split`
 
+#regression 
+
+```python
+regression = LinearRegression()
+regression.fit(X_train, y_train)
+intercept = regression.intercept_
+slope = regression.coef_
+r_sqrd = regression.score(X_train, y_train)
+print(f"R squared: {r_sqrd:.2}")
+```
 1. Create subsets
 		
 
@@ -117,6 +142,12 @@ OUT:
 slope:[-16.271988951469734, -1.4830135966050273, -0.8203056992885642, -0.581626431182139, -0.12818065642264795, -0.012082071043592574, -0.00757627601533797, 0.011418989022213357, 0.01629221534560711, 0.06319817864608888, 0.30398820612116106, 1.9745145165622597, 3.1084562454033]
 >price_regression.score(X_train, y_train)
 >X_train
+### Better coefficients:
+```python
+regr_coef = pd.DataFrame(data=regression.coef_, index=X_train.columns,
+                         columns=["Coefficient"])
+regr_coef
+```
 
 ```
 price_regression.score(X_train, y_train)
@@ -161,6 +192,30 @@ actual_vs_predicted_prices.set_ylabel("Actual price (yi)")
 ```
 ![[Pasted image 20240124182816.png]]
 k
+alt, using  bare #matplotlib :
+```python
+actual = y_train
+predicted_values = regression.predict(X_train)
+
+residuals = actual - predicted_values
+plt.figure()
+plt.scatter(x=y_train, y=predicted_values, c='indigo', alpha=0.6)
+
+# vv i dont understand, why do we do this? vv
+plt.plot(y_train, y_train, color='cyan')
+# with sns.axes_style('white'):
+#     pred_v_actual_regplot = sns.regplot(x=actual, y=predicted_values,)
+#     pred_v_actual_regplot.set_xlabel("Actual price")
+#     pred_v_actual_regplot.set_ylabel("predicted price")
+
+# with sns.axes_style('darkgrid'):
+#     plt.figure()
+#     res_vs_predicted_scatter = sns.scatterplot(x=predicted_values, y=residuals)
+#     res_vs_predicted_scatter.set_xlabel("Predicted prices")
+#     res_vs_predicted_scatter.set_ylabel("Residuals")
+    
+    
+```
 Now do predicted price on the x-axis and residual(actual - minus predicted) on the y-axis
 
 #kde super impose kde over histogram representation of a Series:
