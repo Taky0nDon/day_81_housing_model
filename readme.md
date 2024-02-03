@@ -232,6 +232,10 @@ At this point we must either consider a new model entirely, our transforming our
 
 Is `data["PRICE"]` a good candidate for log transformation?
 ```python
+target_skew = target.skew()
+sns.displot(target, kde=True, color='green')
+plt.title(f"Target has a skew of {target_skew: .3}")
+
 price_plot = sns.displot(x=data["PRICE"],
                          kde=True,
                         )
