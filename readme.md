@@ -142,7 +142,11 @@ OUT:
 slope:[-16.271988951469734, -1.4830135966050273, -0.8203056992885642, -0.581626431182139, -0.12818065642264795, -0.012082071043592574, -0.00757627601533797, 0.011418989022213357, 0.01629221534560711, 0.06319817864608888, 0.30398820612116106, 1.9745145165622597, 3.1084562454033]
 >price_regression.score(X_train, y_train)
 >X_train
+
 ### Better coefficients:
+
+#dataframe
+
 ```python
 regr_coef = pd.DataFrame(data=regression.coef_, index=X_train.columns,
                          columns=["Coefficient"])
@@ -299,3 +303,12 @@ res_vs_predicted.set_ylabel("Residuals")
 residuals = (y_train (actual values!!) - regression_object.predict(X_train)(predicted values!!))
 
 to prevent plots from overlapping, call `plt.figure()` before each plot instantiation,
+
+## Cool #matplotlib formatting:
+
+```python
+plt.title(f'Actual vs Predicted Prices: $y _i$ vs $\hat y_i$', fontsize=17)
+plt.xlabel("Actual prices 000s $y _i$', fontsize=14")
+plt.ylabel("Predicted prices 000s $\hat y_i$", fontsize=14)
+plt.show()
+```
